@@ -131,5 +131,3 @@ bot = tgClient(
 bot_name = bot.me.username
 
 scheduler = AsyncIOScheduler(timezone=str(get_localzone()), event_loop=bot_loop)
-
-bot_loop.run_until_complete()
