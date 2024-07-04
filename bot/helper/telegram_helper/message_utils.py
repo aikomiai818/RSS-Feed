@@ -37,6 +37,19 @@ async def editMessage(message, text, buttons=None, block=True):
         LOGGER.error(str(e))
         return str(e)
 
+async def sendFile(message, file, caption=""):
+    try:
+        return await message.reply_document(
+            document=file, quote=True, caption=caption, disable_notification=True
+        )
+    except FloodWait as f:
+        LOGGER.warning(str(f))
+        await sleep(f.value * 1.2)
+        return await sendFile(message, file, caption)
+    except Exception as e:
+        LOGGER.error(str(e))
+        return str(e)
+
 async def sendRss(text):
     try:
         return await bot.send_message(
