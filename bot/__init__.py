@@ -24,6 +24,7 @@ from uvloop import install
 install()
 setdefaulttimeout(600)
 user_data = {}
+rss_dict = {}
 
 # Configure logging
 basicConfig(
