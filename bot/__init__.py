@@ -1,5 +1,4 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from aria2p import API as ariaAPI, Client as ariaClient
 from asyncio import get_event_loop
 from dotenv import dotenv_values
 from logging import (
@@ -10,15 +9,12 @@ from logging import (
     basicConfig,
     error as log_error,
     info as log_info,
-    warning as log_warning,
     ERROR,
 )
 from os import environ
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from pyrogram import Client as tgClient, enums
-from qbittorrentapi import Client as qbClient
-from sabnzbdapi import sabnzbdClient
 from socket import setdefaulttimeout
 from time import time
 from tzlocal import get_localzone
