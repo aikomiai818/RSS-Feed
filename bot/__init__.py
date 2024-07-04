@@ -39,7 +39,7 @@ getLogger("urllib3").setLevel(INFO)
 getLogger("pyrogram").setLevel(ERROR)
 getLogger("httpx").setLevel(ERROR)
 getLogger("pymongo").setLevel(ERROR)
-getLogger('apscheduler.scheduler').setLevel(ERROR)
+getLogger('apscheduler').setLevel(ERROR)
 
 botStartTime = time()
 bot_loop = get_event_loop()
