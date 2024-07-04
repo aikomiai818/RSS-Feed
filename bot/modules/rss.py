@@ -699,7 +699,7 @@ async def rssMonitor():
                     try:
                         item_title = rss_d.entries[feed_count]["title"]
                         try:
-                            url = rss_d.entries[feed_count]["links"][1]["href"]
+                            url = rss_d.entries[feed_count]["links"][0]["href"]
                         except IndexError:
                             url = rss_d.entries[feed_count]["link"]
                         if data["last_feed"] == url or data["last_title"] == item_title:
