@@ -10,6 +10,7 @@ from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 from time import time
 
 from bot import scheduler, rss_dict, LOGGER, DATABASE_URL, config_dict, bot
+from bot.helper.ext_utils.udemy_parse import parse_udemy
 from bot.helper.ext_utils.bot_utils import new_thread, arg_parser
 from bot.helper.ext_utils.db_handler import DbManager
 from bot.helper.ext_utils.exceptions import RssShutdownException
@@ -700,6 +701,7 @@ async def rssMonitor():
                         item_title = rss_d.entries[feed_count]["title"]
                         try:
                             url = rss_d.entries[feed_count]["links"][0]["href"]
+                            url = parse_udemy(url)
                         except IndexError:
                             url = rss_d.entries[feed_count]["link"]
                         if data["last_feed"] == url or data["last_title"] == item_title:
