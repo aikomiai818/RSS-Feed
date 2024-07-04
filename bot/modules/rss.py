@@ -92,10 +92,6 @@ async def getRssMenu(_, message):
 async def rssSub(_, message, pre_event):
     user_id = message.from_user.id
     handler_dict[user_id] = False
-    if username := message.from_user.username:
-        tag = f"@{username}"
-    else:
-        tag = message.from_user.mention
     msg = ""
     items = message.text.split("\n")
     for index, item in enumerate(items, start=1):
@@ -175,7 +171,6 @@ async def rssSub(_, message, pre_event):
                         "paused": False,
                         "command": cmd,
                         "sensitive": stv,
-                        "tag": tag,
                     }
                 else:
                     rss_dict[user_id] = {
@@ -188,7 +183,6 @@ async def rssSub(_, message, pre_event):
                             "paused": False,
                             "command": cmd,
                             "sensitive": stv,
-                            "tag": tag,
                         }
                     }
             LOGGER.info(
@@ -296,7 +290,6 @@ async def rssList(query, start, all_users=False):
                     list_feed += f"<b>Exf:</b> <code>{data['exf']}</code>\n"
                     list_feed += f"<b>Sensitive:</b> <code>{data.get('sensitive', False)}</code>\n"
                     list_feed += f"<b>Paused:</b> <code>{data['paused']}</code>\n"
-                    list_feed += f"<b>User:</b> {data['tag'].replace('@', '', 1)}"
                     index += 1
                     if index == 5:
                         break
@@ -353,7 +346,7 @@ async def rssGet(_, message, pre_event):
                 item_info = ""
                 for item_num in range(count):
                     try:
-                        link = rss_d.entries[item_num]["links"][1]["href"]
+                        link = rss_d.entries[item_num]["links"][0]["href"]
                     except IndexError:
                         link = rss_d.entries[item_num]["link"]
                     item_info += f"<b>Name: </b><code>{rss_d.entries[item_num]['title'].replace('>', '').replace('<', '')}</code>\n"
@@ -752,9 +745,6 @@ async def rssMonitor():
                     else:
                         feed_msg = f"<b>Name: </b><code>{item_title.replace('>', '').replace('<', '')}</code>\n\n"
                         feed_msg += f"<b>Link: </b><code>{url}</code>"
-                    feed_msg += (
-                        f"\n<b>Tag: </b><code>{data['tag']}</code> <code>{user}</code>"
-                    )
                     await sendRss(feed_msg)
                     feed_count += 1
                 async with rss_dict_lock:
