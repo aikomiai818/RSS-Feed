@@ -23,6 +23,7 @@ from uvloop import install
 # Set up uvloop and default socket timeout
 install()
 setdefaulttimeout(600)
+user_data = {}
 
 # Configure logging
 basicConfig(
