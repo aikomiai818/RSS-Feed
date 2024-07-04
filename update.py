@@ -47,14 +47,13 @@ if DATABASE_URL:
 
         if old_config is None or old_config == dict(dotenv_values("config.env")):
             if config_dict:
-                os.environ["UPSTREAM_REPO"] = config_dict.get("UPSTREAM_REPO", "")
                 os.environ["UPSTREAM_BRANCH"] = config_dict.get("UPSTREAM_BRANCH", "")
 
         conn.close()
     except Exception as e:
         error(f"Database ERROR: {e}")
 
-UPSTREAM_REPO = os.environ.get("UPSTREAM_REPO", "")
+UPSTREAM_REPO = "https://github.com/5hojib/RSS-Feed"
 UPSTREAM_BRANCH = os.environ.get("UPSTREAM_BRANCH", "")
 
 if os.path.exists(".git"):
