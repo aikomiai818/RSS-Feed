@@ -15,6 +15,7 @@ from pymongo.server_api import ServerApi
 from subprocess import run
 
 getLogger("pymongo").setLevel(ERROR)
+getLogger('apscheduler.scheduler').setLevel(ERROR)
 
 basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
