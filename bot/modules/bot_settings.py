@@ -89,8 +89,6 @@ async def edit_variable(_, message, pre_message, key):
     elif key == "RSS_CHAT":
         if value.isdigit() or value.startswith("-"):
             value = int(value)
-    elif value.isdigit():
-        value = int(value)
     config_dict[key] = value
     await update_buttons(pre_message, "var")
     await deleteMessage(message)
