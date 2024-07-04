@@ -24,7 +24,6 @@ from bot.helper.telegram_helper.message_utils import (
     sendMessage,
     sendFile,
     editMessage,
-    update_status_message,
     deleteMessage,
 )
 from bot.modules.rss import addJob
