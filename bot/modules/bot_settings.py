@@ -12,7 +12,6 @@ from time import time
 from bot import (
     config_dict,
     DATABASE_URL,
-    aria2,
     LOGGER,
     bot,
 )
