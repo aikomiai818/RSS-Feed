@@ -2,6 +2,18 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+
+def get_cover(url):
+    response = requests.get(url)
+    if response.status_code != 200:
+        return None
+    soup = BeautifulSoup(response.content, 'html.parser')
+    cover_photo = soup.find('meta', property='og:image')
+    if cover_photo:
+        return cover_photo['content']
+    return None
+
+
 def parse_udemy(url):
     if 'discudemy.com' not in url:
         return url

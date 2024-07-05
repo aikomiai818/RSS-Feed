@@ -50,18 +50,23 @@ async def sendFile(message, file, caption=""):
         LOGGER.error(str(e))
         return str(e)
 
-async def sendRss(text):
+async def sendRss(text, thumb, url):
+    button = ButtonMaker()
+    button.iButton("Enrol now", url)
+    button = button.build_menu(1)
     try:
-        return await bot.send_message(
+        return await bot.send_photo(
             chat_id=config_dict["RSS_CHAT"],
-            text=text,
+            photo=url
+            caption=text,
+            reply_markup=button
             disable_web_page_preview=True,
             disable_notification=True,
         )
     except FloodWait as f:
         LOGGER.warning(str(f))
         await sleep(f.value * 1.2)
-        return await sendRss(text)
+        return await sendRss(text, thumb, url)
     except Exception as e:
         LOGGER.error(str(e))
         return str(e)

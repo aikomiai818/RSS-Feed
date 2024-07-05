@@ -10,7 +10,7 @@ from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 from time import time
 
 from bot import scheduler, rss_dict, LOGGER, DATABASE_URL, config_dict, bot
-from bot.helper.ext_utils.udemy_parse import parse_udemy
+from bot.helper.ext_utils.udemy import parse_udemy, get_cover
 from bot.helper.ext_utils.bot_utils import new_thread, arg_parser
 from bot.helper.ext_utils.db_handler import DbManager
 from bot.helper.ext_utils.exceptions import RssShutdownException
@@ -738,16 +738,9 @@ async def rssMonitor():
                             break
                     if not parse:
                         continue
-                    if command := data["command"]:
-                        cmd = command.split(maxsplit=1)
-                        cmd.insert(1, url)
-                        feed_msg = " ".join(cmd)
-                        if not feed_msg.startswith("/"):
-                            feed_msg = f"/{feed_msg}"
-                    else:
-                        feed_msg = f"<b>Name: </b><code>{item_title.replace('>', '').replace('<', '')}</code>\n\n"
-                        feed_msg += f"<b>Link: </b><code>{url}</code>"
-                    await sendRss(feed_msg)
+                    feed_msg = f"<b>{item_title.replace('>', '').replace('<', '')}</b>\n\n"
+                    thumb = get_cover(url)
+                    await sendRss(feed_msg, thumb, url)
                     feed_count += 1
                 async with rss_dict_lock:
                     if user not in rss_dict or not rss_dict[user].get(title, False):
@@ -756,10 +749,7 @@ async def rssMonitor():
                         {"last_feed": last_link, "last_title": last_title}
                     )
                 await DbManager().rss_update(user)
-                LOGGER.info(f"Feed Name: {title}")
-                LOGGER.info(f"Last item: {last_link}")
-            except RssShutdownException as ex:
-                LOGGER.info(ex)
+            except RssShutdownException:
                 break
             except Exception as e:
                 LOGGER.error(f"{e} - Feed Name: {title} - Feed Link: {data['link']}")
