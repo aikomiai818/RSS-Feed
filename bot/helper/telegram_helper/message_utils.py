@@ -60,7 +60,7 @@ async def sendRss(text, thumb, url):
             chat_id=config_dict["RSS_CHAT"],
             photo=url,
             caption=text,
-            reply_markup=button
+            reply_markup=button,
             disable_web_page_preview=True,
             disable_notification=True,
         )
