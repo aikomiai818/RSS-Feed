@@ -61,8 +61,6 @@ async def sendRss(text, thumb, url):
             photo=url,
             caption=text,
             reply_markup=button,
-            disable_web_page_preview=True,
-            disable_notification=True,
         )
     except FloodWait as f:
         LOGGER.warning(str(f))
