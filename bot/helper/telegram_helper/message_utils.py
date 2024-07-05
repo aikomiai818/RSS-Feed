@@ -58,7 +58,7 @@ async def sendRss(text, thumb, url):
     try:
         return await bot.send_photo(
             chat_id=config_dict["RSS_CHAT"],
-            photo=url
+            photo=url,
             caption=text,
             reply_markup=button
             disable_web_page_preview=True,
