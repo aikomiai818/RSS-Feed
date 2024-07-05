@@ -53,7 +53,7 @@ async def sendFile(message, file, caption=""):
 
 async def sendRss(text, thumb, url):
     button = ButtonMaker()
-    button.iButton("Enrol now", url)
+    button.ubutton("Enrol now", url)
     button = button.build_menu(1)
     try:
         return await bot.send_photo(
